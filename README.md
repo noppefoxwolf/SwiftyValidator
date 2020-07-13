@@ -14,7 +14,10 @@ let validator = GroupedValidator(validators: [
   StringCountValidator(validCount: 4).erase(),
   StringCountRangeValidator(validRange: 0...5).erase()
 ])
-let value = ValidatableValue(value: "text", validator: validator)
+let validatableValue = ValidatableValue(value: "text", validator: validator)
+validatableValue.validate // Result<String, Error>()
+validatableValue.isValid // Bool
+validatableValue.value = "new Value"
 ```
 
 ### Custom validator
