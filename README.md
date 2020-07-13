@@ -15,7 +15,7 @@ let validator = GroupedValidator(validators: [
   StringCountRangeValidator(validRange: 0...5).erase()
 ])
 let validatableValue = ValidatableValue(value: "text", validator: validator)
-validatableValue.validate // Result<String, Error>()
+validatableValue.validate() // Result<String, Error>()
 validatableValue.isValid // Bool
 validatableValue.value = "new Value"
 ```
@@ -47,7 +47,7 @@ struct ImageSizeValidator: Validatable {
 ### Handle Errors
 
 ```swift
-switch validatableValue.validate {
+switch validatableValue.validate() {
   case let .success(value):
     break
   case let .failure(error):
@@ -64,4 +64,14 @@ switch validatableValue.validate {
     }
   }
 }
+```
+
+### PropertyWrapper
+
+```swift
+@Validation(StringCountValidator(validCount: 20)) var text: String = ""
+
+$text.validate() // Result<String, Error>()
+$text.isValid // Bool
+text.value = "new Value"
 ```

@@ -9,7 +9,7 @@ final class SwiftyValidatorTests: XCTestCase {
         ]))
         let optionalText: String? = "text"
         let value = ValidatableValue(value: optionalText, validator: validator)
-        switch value.validate {
+        switch value.validate() {
         case let .success(value):
             XCTAssertEqual(value, "text")
         case .failure:
@@ -24,7 +24,7 @@ final class SwiftyValidatorTests: XCTestCase {
         ]))
         let optionalText: String? = nil
         let value = ValidatableValue(value: optionalText, validator: validator)
-        switch value.validate {
+        switch value.validate() {
         case let .success(value):
             XCTAssertTrue(false)
         case let .failure(error):
@@ -49,7 +49,7 @@ final class SwiftyValidatorTests: XCTestCase {
         ]))
         let optionalText: String? = "texttext" // 8 characters
         let value = ValidatableValue(value: optionalText, validator: validator)
-        switch value.validate {
+        switch value.validate() {
         case let .success(value):
             XCTAssertTrue(false)
         case let .failure(error):

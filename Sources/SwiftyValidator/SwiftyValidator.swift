@@ -21,8 +21,8 @@ public struct ValidatableValue<Value> {
         self.validator = validator.erase()
     }
     
-    public var validate: Result<Value, Error> { validator.validate(value: value) }
-    public var isValid: Bool { validate.isSuccess }
+    public func validate() -> Result<Value, Error> { validator.validate(value: value) }
+    public var isValid: Bool { validate().isSuccess }
 }
 
 public extension Validatable {
