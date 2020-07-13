@@ -4,6 +4,7 @@
 - ✅ Customizable
 - ✅ Multiple validation
 - ✅ Handle multiple error
+- ✅ PropertyWrapper
 
 ## Usage
 
