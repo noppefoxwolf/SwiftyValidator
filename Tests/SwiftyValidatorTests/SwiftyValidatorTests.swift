@@ -3,10 +3,12 @@ import XCTest
 
 final class SwiftyValidatorTests: XCTestCase {
     func multiValidateTest() {
-        let value = ValidatableValue(value: "text", validator: GroupedValidator(validators: [
+        let validator = RequireValidator(groupedValidator: GroupedValidator(validators: [
             StringCountValidator(validCount: 4).erase(),
             StringCountRangeValidator(validRange: 0...5).erase()
         ]))
+        let optionalText: String? = "text"
+        let value = ValidatableValue(value: optionalText, validator: validator)
         XCTAssertTrue(value.isValid)
     }
 }

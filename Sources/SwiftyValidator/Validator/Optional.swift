@@ -18,6 +18,10 @@ public struct RequireValidator<V>: Validatable {
         self.groupedValidator = groupedValidator
     }
     
+    public init<T: Validatable>(validator: T) where T.Value == V {
+        self.groupedValidator = GroupedValidator(validators: [validator.erase()])
+    }
+    
     public func validate(value: Value) -> Result<Value, Swift.Error> {
         if let unwrappedValue = value {
             switch groupedValidator.validate(value: unwrappedValue) {
