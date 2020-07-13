@@ -1,5 +1,10 @@
 # SwiftyValidator
 
+✅ Built-in validators
+✅ Customizable
+✅ Multiple validation
+✅ Handle multiple error
+
 ## Usage
 
 ### Built-in validator.
