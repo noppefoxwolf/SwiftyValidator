@@ -43,3 +43,22 @@ struct ImageSizeValidator: Validatable {
     }
 }
 ```
+
+### Handle Errors
+
+```swift
+case let .success(value):
+case let .failure(error):
+  switch error {
+  case let error as RequireValidator<String>.Error:
+    switch error {
+      case .valueIsNil:
+      break
+    }
+  case is GroupedValidator<String>.Error:
+    break
+  default:
+    break
+  }
+}
+```
