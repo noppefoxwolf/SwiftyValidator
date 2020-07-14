@@ -17,11 +17,11 @@ public struct StringCountRangeValidator: Validatable {
         self.validRange = validRange
     }
     
-    public func validate(value: String) -> Result<String, Swift.Error> {
+    public func validate(value: String) -> Result<String, ValidationError> {
         if validRange ~= value.count {
             return .success(value)
         } else {
-            return .failure(Error.textCountOutOfBounds)
+            return .failure(.init([Error.textCountOutOfBounds]))
         }
     }
 }
@@ -36,11 +36,11 @@ public struct StringCountValidator: Validatable {
         self.validCount = validCount
     }
     
-    public func validate(value: String) -> Result<String, Swift.Error> {
+    public func validate(value: String) -> Result<String, ValidationError> {
         if validCount == value.count {
             return .success(value)
         } else {
-            return .failure(Error.textCountOutOfBounds)
+            return .failure(.init([Error.textCountOutOfBounds]))
         }
     }
 }

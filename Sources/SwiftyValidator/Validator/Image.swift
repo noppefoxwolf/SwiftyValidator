@@ -19,11 +19,11 @@ struct ImageSizeValidator: Validatable {
     }
     
     
-    func validate(value: Value) -> Result<Value, Swift.Error> {
+    func validate(value: Value) -> Result<Value, ValidationError> {
         if value.size.width == size.width && value.size.height == size.height {
             return .success(value)
         } else {
-            return .failure(Error.invalidSize)
+            return .failure(.init([Error.invalidSize]))
         }
     }
 }

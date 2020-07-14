@@ -18,8 +18,8 @@ public struct GroupedValidator<Value>: Validatable {
         self.validators = validators
     }
     
-    public func validate(value: Value) -> Result<Value, Swift.Error> {
-        var errors: [Swift.Error] = []
+    public func validate(value: Value) -> Result<Value, ValidationError> {
+        var errors: [ValidationError] = []
         for result in validators.map({ $0.validate(value: value) }) {
             switch result {
             case .success:
@@ -31,7 +31,10 @@ public struct GroupedValidator<Value>: Validatable {
         if errors.isEmpty {
             return .success(value)
         } else {
-            return .failure(Error.errors(errors))
+            let errors = errors.reduce(into: [Swift.Error](), {
+                $0.append(contentsOf: $1.errors)
+            })
+            return .failure(.init(errors))
         }
     }
 }

@@ -25,20 +25,10 @@ final class SwiftyValidatorTests: XCTestCase {
         let optionalText: String? = nil
         let value = ValidatableValue(value: optionalText, validator: validator)
         switch value.validate() {
-        case let .success(value):
+        case .success:
             XCTAssertTrue(false)
         case let .failure(error):
-            switch error {
-            case let error as RequireValidator<String>.Error:
-                switch error {
-                case .valueIsNil:
-                    XCTAssertTrue(true)
-                }
-            case is GroupedValidator<String>.Error:
-                XCTAssertTrue(false)
-            default:
-                XCTAssertTrue(false)
-            }
+            XCTAssertEqual(error.errors.count, 1)
         }
     }
     
@@ -50,23 +40,10 @@ final class SwiftyValidatorTests: XCTestCase {
         let optionalText: String? = "texttext" // 8 characters
         let value = ValidatableValue(value: optionalText, validator: validator)
         switch value.validate() {
-        case let .success(value):
+        case .success:
             XCTAssertTrue(false)
         case let .failure(error):
-            switch error {
-            case let error as RequireValidator<String>.Error:
-                switch error {
-                case .valueIsNil:
-                    XCTAssertTrue(false)
-                }
-            case let error as GroupedValidator<String>.Error:
-                switch error {
-                case let .errors(errors):
-                    XCTAssertEqual(errors.count, 2)
-                }
-            default:
-                XCTAssertTrue(false)
-            }
+            XCTAssertEqual(error.errors.count, 2)
         }
     }
 }

@@ -22,7 +22,7 @@ public struct RequireValidator<V>: Validatable {
         self.groupedValidator = GroupedValidator(validators: [validator.erase()])
     }
     
-    public func validate(value: Value) -> Result<Value, Swift.Error> {
+    public func validate(value: Value) -> Result<Value, ValidationError> {
         if let unwrappedValue = value {
             switch groupedValidator.validate(value: unwrappedValue) {
             case .success:
@@ -31,7 +31,7 @@ public struct RequireValidator<V>: Validatable {
                 return .failure(error)
             }
         } else {
-            return .failure(Error.valueIsNil)
+            return .failure(.init([Error.valueIsNil]))
         }
     }
 }

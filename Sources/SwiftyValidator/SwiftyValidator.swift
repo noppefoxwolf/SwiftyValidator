@@ -9,7 +9,7 @@ import Foundation
 
 public protocol Validatable {
     associatedtype Value
-    func validate(value: Value) -> Result<Value, Error>
+    func validate(value: Value) -> Result<Value, ValidationError>
 }
 
 public struct ValidatableValue<Value> {
@@ -21,7 +21,7 @@ public struct ValidatableValue<Value> {
         self.validator = validator.erase()
     }
     
-    public func validate() -> Result<Value, Error> { validator.validate(value: value) }
+    public func validate() -> Result<Value, ValidationError> { validator.validate(value: value) }
     public var isValid: Bool { validate().isSuccess }
 }
 

@@ -16,7 +16,7 @@ let validator = GroupedValidator(validators: [
   StringCountRangeValidator(validRange: 0...5).erase()
 ])
 let validatableValue = ValidatableValue(value: "text", validator: validator)
-validatableValue.validate() // Result<String, Error>()
+validatableValue.validate() // Result<String, ValidationError>()
 validatableValue.isValid // Bool
 validatableValue.value = "new Value"
 ```
@@ -35,11 +35,11 @@ struct ImageSizeValidator: Validatable {
     }
     
     
-    func validate(value: Value) -> Result<Value, Swift.Error> {
+    func validate(value: Value) -> Result<Value, ValidationError> {
         if value.size.width == size.width && value.size.height == size.height {
             return .success(value)
         } else {
-            return .failure(Error.invalidSize)
+            return .failure(.init([Error.invalidSize]))
         }
     }
 }
@@ -52,17 +52,7 @@ switch validatableValue.validate() {
   case let .success(value):
     break
   case let .failure(error):
-    switch error {
-    case let error as RequireValidator<String>.Error:
-      switch error {
-        case .valueIsNil:
-        break
-      }
-    case is GroupedValidator<String>.Error:
-      break
-    default:
-      break
-    }
+    error.errors
   }
 }
 ```
@@ -72,7 +62,7 @@ switch validatableValue.validate() {
 ```swift
 @Validation(StringCountValidator(validCount: 20)) var text: String = ""
 
-$text.validate() // Result<String, Error>()
+$text.validate() // Result<String, ValidationError>()
 $text.isValid // Bool
 text.value = "new Value"
 ```

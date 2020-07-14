@@ -19,7 +19,7 @@ public struct Validation<Value> {
         validatableValue = .init(value: wrappedValue, validator: validator)
     }
     
-    public func validate() -> Result<Value, Error> {
+    public func validate() -> Result<Value, ValidationError> {
         validatableValue.validate()
     }
     
