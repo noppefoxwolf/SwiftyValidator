@@ -9,21 +9,19 @@ import Foundation
 
 @propertyWrapper
 public struct Validation<Value> {
-    private var validatableValue: ValidatableValue<Value>
-    public var wrappedValue: Value {
-        get { validatableValue.value }
-        set { validatableValue.value = newValue }
-    }
+    private let validator: AnyValidator<Value>
+    public var wrappedValue: Value
     
     public init<V: Validatable>(wrappedValue: Value, _ validator: V) where V.Value == Value {
-        validatableValue = .init(value: wrappedValue, validator: validator)
+        self.wrappedValue = wrappedValue
+        self.validator = validator.erase()
     }
     
     public func validate() -> Result<Value, ValidationError> {
-        validatableValue.validate()
+        validator.validate(value: wrappedValue)
     }
     
     public var isValid: Bool {
-        validatableValue.isValid
+        validator.validate(value: wrappedValue).isSuccess
     }
 }

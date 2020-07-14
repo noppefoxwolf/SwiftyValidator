@@ -8,7 +8,7 @@ final class SwiftyValidatorTests: XCTestCase {
             StringCountRangeValidator(validRange: 0...5).erase()
         ]))
         let optionalText: String? = "text"
-        let value = ValidatableValue(value: optionalText, validator: validator)
+        let value = Validation(wrappedValue: optionalText, validator)
         switch value.validate() {
         case let .success(value):
             XCTAssertEqual(value, "text")
@@ -23,7 +23,7 @@ final class SwiftyValidatorTests: XCTestCase {
             StringCountRangeValidator(validRange: 0...5).erase()
         ]))
         let optionalText: String? = nil
-        let value = ValidatableValue(value: optionalText, validator: validator)
+        let value = Validation(wrappedValue: optionalText, validator)
         switch value.validate() {
         case .success:
             XCTAssertTrue(false)
@@ -38,7 +38,7 @@ final class SwiftyValidatorTests: XCTestCase {
             StringCountRangeValidator(validRange: 0...5).erase()
         ]))
         let optionalText: String? = "texttext" // 8 characters
-        let value = ValidatableValue(value: optionalText, validator: validator)
+        let value = Validation(wrappedValue: optionalText, validator)
         switch value.validate() {
         case .success:
             XCTAssertTrue(false)
