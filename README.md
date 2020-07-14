@@ -15,10 +15,10 @@ let validator = GroupedValidator(validators: [
   StringCountValidator(validCount: 4).erase(),
   StringCountRangeValidator(validRange: 0...5).erase()
 ])
-let validatableValue = ValidatableValue(value: "text", validator: validator)
+let validatableValue = Validation(wrappedValue: "text", validator)
 validatableValue.validate() // Result<String, ValidationError>()
 validatableValue.isValid // Bool
-validatableValue.value = "new Value"
+validatableValue.wrappedValue = "new Value"
 ```
 
 ### Custom validator
@@ -64,5 +64,5 @@ switch validatableValue.validate() {
 
 $text.validate() // Result<String, ValidationError>()
 $text.isValid // Bool
-text.value = "new Value"
+text.wrappedValue = "new Value"
 ```
